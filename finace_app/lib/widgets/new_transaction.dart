@@ -35,10 +35,7 @@ class _NewTransactionState extends State<NewTransaction> {
       return;
     }
 
-    widget.addTX(
-      enteredTitle, 
-      enteredAmount,
-      _selectDate);
+    widget.addTX(enteredTitle, enteredAmount, _selectDate);
 
     Navigator.of(context).pop();
   }
@@ -62,52 +59,59 @@ class _NewTransactionState extends State<NewTransaction> {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 5,
-      child: Container(
-        padding: EdgeInsets.all(10),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.end,
-          children: <Widget>[
-            TextField(
-                controller: titleController,
-                onSubmitted: (_) => _submitData(),
-                decoration: InputDecoration(labelText: "Title")),
-            TextField(
-                keyboardType: TextInputType.numberWithOptions(decimal: true),
-                controller: amountController,
-                onSubmitted: (_) => _submitData(),
-                decoration: InputDecoration(labelText: "Amount")),
-            Container(
-              height: 70,
-              child: Row(
-                children: <Widget>[
-                  Expanded(
-                    child: Text(_selectDate == null
-                        ? 'No Date Chosen'
-                        : 'Picked Date: ${DateFormat.yMd().format(_selectDate)}'),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(10),
-                    child: ElevatedButton(
-                      child: Text(
-                        "Choose Date",
-                        style: TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      onPressed: _precentDatePicker,
-                      style: ElevatedButton.styleFrom(
-                          primary: Theme.of(context).colorScheme.primary,
-                          onPrimary: Colors.white),
+    
+    return SingleChildScrollView(
+      child: Card(
+        elevation: 5,
+        child: Container(
+          padding: EdgeInsets.only(
+              top: 10,
+              left: 10,
+              right: 10,
+              bottom: MediaQuery.of(context).viewInsets.bottom + 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
+              TextField(
+                  controller: titleController,
+                  onSubmitted: (_) => _submitData(),
+                  decoration: InputDecoration(labelText: "Title")),
+              TextField(
+                  keyboardType: TextInputType.numberWithOptions(decimal: true),
+                  controller: amountController,
+                  onSubmitted: (_) => _submitData(),
+                  decoration: InputDecoration(labelText: "Amount")),
+              Container(
+                height: 70,
+                child: Row(
+                  children: <Widget>[
+                    Expanded(
+                      child: Text(_selectDate == null
+                          ? 'No Date Chosen'
+                          : 'Picked Date: ${DateFormat.yMd().format(_selectDate)}'),
                     ),
-                  )
-                ],
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: ElevatedButton(
+                        child: Text(
+                          "Choose Date",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                        onPressed: _precentDatePicker,
+                        style: ElevatedButton.styleFrom(
+                            primary: Theme.of(context).colorScheme.primary,
+                            onPrimary: Colors.white),
+                      ),
+                    )
+                  ],
+                ),
               ),
-            ),
-            TextButton(
-                onPressed: _submitData,
-                style: TextButton.styleFrom(primary: Colors.purple),
-                child: Text("Add Transaction"))
-          ],
+              TextButton(
+                  onPressed: _submitData,
+                  style: TextButton.styleFrom(primary: Colors.purple),
+                  child: Text("Add Transaction"))
+            ],
+          ),
         ),
       ),
     );
